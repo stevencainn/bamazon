@@ -30,10 +30,10 @@ function managerChoices() {
                     displayItems();
                     break;
                 case "Low Inventory":
-                    // shows low inventory
+                    lowInv();
                     break;
                 case "Add to Inventory":
-                    //adds item to inventory
+                    addStock();
                     break;
                 case "Add New Product":
                     //adds new item
@@ -47,5 +47,56 @@ function displayItems() {
     connection.query("SELECT * FROM products", function (err, response) {
         if (err) throw err;
         console.table(response);
+        connection.end();
     });
 };
+
+
+function lowInv() {
+    connection.query("SELECT * FROM Products WHERE stock_quantity <=25", function (err, response) {
+        if (err) throw err;
+        console.table(response);
+        connection.end();
+    })
+
+};
+
+
+function addStock() {
+    connection.query("SELECT * FROM products", function (err, response) {
+        if (err) throw err;
+        console.table(response);
+
+        inquirer
+            .prompt([
+                {
+
+                    name: "item",
+                    type: "input",
+                    message: "What is the item_id of the item you would like to update stock on?"
+                }, {
+                    name: "quantity",
+                    type: "input",
+                    message: "How many would you like to add?"
+                }
+            ]).then(function (answer) {
+
+                var productUpdate = answer.item;
+                var quantityUpdate = answer.quantity;
+                var itemInventory;
+
+                connection.query("SELECT * FROM products WHERE ?", { item_id: productUpdate }, function (err, response) {
+                    if (err) throw err;
+                    itemInventory = (response[0].stock_quantity + parseInt(quantityUpdate));
+                    console.log(itemInventory);
+                    
+                    connection.query("UPDATE products SET ? WHERE ?", [{ stock_quantity: itemInventory }, { item_id: productUpdate }], function (err, response) {
+                        if (err) throw err;
+                        console.log("Inventory Updated");
+                        connection.end();
+
+                    })
+                })
+            })
+    });
+}

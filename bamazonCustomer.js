@@ -17,6 +17,7 @@ connection.connect(function (err) {
     displayItems();
 })
 
+
 function displayItems(){
     connection.query("SELECT * FROM products", function(err, response){
         if(err) throw err;
@@ -46,7 +47,7 @@ function pickItem(){
 
         connection.query("SELECT * FROM products WHERE ?", {item_id: product}, function(err, response){
             if(err) throw err;
-            console.log(response[0]);
+            // console.log(response[0]);
             if(quantity > response[0].stock_quantity){
                 console.log("Insufficient Quantity!!")
             }else {
