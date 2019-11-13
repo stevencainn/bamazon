@@ -1,7 +1,7 @@
 BAMAZON STORE FRONT
 creating an Amazon-like store front using Node.js and MySQL.
 
-[Uploading Screen Recording 2019-11-12 at 8.32.08 PM.mov.zip…]()
+[video](example.mov)
 
 What Each JavaScript Does
 BamazonCustomer.js
