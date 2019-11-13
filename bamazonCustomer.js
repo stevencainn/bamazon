@@ -56,18 +56,13 @@ function pickItem(){
                 console.log(`
                 You have purchased ${quantity} of ${response[0].product_name}
                 Your total is: ${userCost}`);
+                connection.query("UPDATE products SET ? WHERE ?", [{stock_quantity: updateQuantity}, {item_id: product}], function(err, response){
+                    if (err) throw err;
+                    console.log("Inventory Updated")
+                })
             }
-
-            connection.query("UPDATE products SET ? WHERE ?", [{stock_quantity: updateQuantity}, {item_id: product}], function(err, response){
-                if (err) throw err;
-                console.log("Inventory Updated")
-            })
-
     
-
-
-
-            connection.end();
+         connection.end();
 
         })
     })

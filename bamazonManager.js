@@ -36,7 +36,7 @@ function managerChoices() {
                     addStock();
                     break;
                 case "Add New Product":
-                    //adds new item
+                    addNew();
                     break;
             }
         });
@@ -100,3 +100,43 @@ function addStock() {
             })
     });
 }
+
+
+function addNew(){
+    inquirer
+            .prompt([
+                {
+
+                    name: "item",
+                    type: "input",
+                    message: "What is the item you would like to add?"
+                }, {
+                    name: "dep",
+                    type: "input",
+                    message: "Department of item?"
+                },{
+                    name: "price",
+                    type: "input",
+                    message: "Price of product?"
+                },{
+                    name: "stock",
+                    type: "input",
+                    message: "How many would you like to list?"
+                }
+                ]).then(function (answer){
+                var product = answer.item;
+                var department = answer.dep;
+                var price = answer.price;
+                var stock = answer.stock
+
+
+
+                connection.query(`INSERT INTO products(product_name, department_name, price, stock_quantity) VALUES(?, ?, ?, ?)`, [product, department, price, stock], function(err, response){
+                    if (err) throw err;
+                        console.log("Product Added to Shop!");
+                        connection.end();
+
+                })
+
+            })   
+    }
