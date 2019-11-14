@@ -1,7 +1,8 @@
 BAMAZON STORE FRONT
 creating an Amazon-like store front using Node.js and MySQL.
 
-[video](example.mov)
+![](assets/example.gif)
+
 
 What Each JavaScript Does
 BamazonCustomer.js
